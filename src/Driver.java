@@ -37,38 +37,54 @@ public class Driver extends theSystem
 		System.out.println("all arrays are implemented in the source code and can be edited that way");
 
 		System.out.println("user interactive mode initiated:");
-		
-		int[] intArr = new int[3];
-		String[] arr = new String[3];
-		String requestInput = "";
-		while(true)
+		int x = 0;
+		while(x == 0)
 		{
-			String question = "\nWhat action would you like to perform? \n 1. request resource \n 2. release resource \n 3. exit simulation \n";
-			String input = Driver.getInput(question);
-			
-			if (input.equals("1")) 
+			try 
 			{
-				requestInput = Driver.getInput("\nplease enter the process, resource, and amount requested in that order seperated by commas. ex: '1,2,3' \n");
-				arr = requestInput.split(",");
-				for (int i = 0; i < 3; i++)
+				int[] intArr = new int[3];
+				String[] arr = new String[3];
+				String requestInput = "";
+				while(true)
 				{
-					intArr[i] = Integer.parseInt(arr[i]);
+					String question = "\nWhat action would you like to perform? \n 1. request resource \n 2. release resource \n 3. exit simulation \n";
+					String input = Driver.getInput(question);
+					
+					if (input.equals("1")) 
+					{
+						requestInput = Driver.getInput("\nplease enter the process, resource, and amount requested in that order seperated by commas. ex: '1,2,3' \n");
+						arr = requestInput.split(",");
+						for (int i = 0; i < 3; i++)
+						{
+							intArr[i] = Integer.parseInt(arr[i]);
+						}
+						sys.request(intArr[0], intArr[1], intArr[2]);
+					}
+					else if (input.equals("2")) 
+					{
+						requestInput = Driver.getInput("\nplease enter the process, resource, and amount to release in that order seperated by commas. ex: '1,2,3' \n");
+						arr = requestInput.split(",");
+						for (int i = 0; i < 3; i++)
+						{
+							intArr[i] = Integer.parseInt(arr[i]);
+						}
+						sys.release(intArr[0], intArr[1], intArr[2]);
+					}
+					else if (input.equals("3"))
+					{
+						System.out.println("exiting... \n");
+						x = 1;
+						break;
+					}
 				}
-				sys.request(intArr[0], intArr[1], intArr[2]);
-			}
-			else if (input.equals("2")) 
+			} 
+			catch (Exception e) 
 			{
-				requestInput = Driver.getInput("\nplease enter the process, resource, and amount to release in that order seperated by commas. ex: '1,2,3' \n");
-				arr = requestInput.split(",");
-				for (int i = 0; i < 3; i++)
-				{
-					intArr[i] = Integer.parseInt(arr[i]);
-				}
-				sys.release(intArr[0], intArr[1], intArr[2]);
+				System.out.println(e);
+				//Driver.run();
 			}
-			else if (input.equals("3"))
-			{
-				System.out.println("exiting... \n");
+			if (x == 1)
+			{	
 				break;
 			}
 		}
